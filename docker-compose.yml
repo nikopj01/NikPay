@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  transactionhistorydb:
+    image: mongo
+
+  transactionhistory.api:
+    image: ${DOCKER_REGISTRY-}transactionhistoryapi
+    build:
+      context: .
+      dockerfile: Microservices/TransactionHistory/TransactionHistory.API/Dockerfile
+
+volumes:
+  mongo_data:
