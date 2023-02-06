@@ -1,0 +1,54 @@
+{
+  "Routes": [
+    //Transaction History API
+    {
+      "DownstreamPathTemplate": "/api/v1/TransactionHistory/GetTransactionHistoryByEmail/{email}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "transactionhistory.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/TransactionHistory/GetTransactionHistoryByEmail/{email}",
+      "UpstreamHttpMethod": [ "GET"],
+      "FileCacheOptions": { "TtlSeconds": 60 }//2nd call come from cache
+    },
+    //Payment API
+    {
+      "DownstreamPathTemplate": "/api/v1/Payment/AddPayment",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "payment.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Payment/AddPayment",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Payment/GetBalanceByEmail/{email}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "payment.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Payment/GetBalanceByEmail/{email}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        //In 5s only can request once. If overlimit, wait for 10s
+        "Period": "5s",
+        "Limit": 1,
+        "PeriodTimespan": 10
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8001"
+  }
+}

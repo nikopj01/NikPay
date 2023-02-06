@@ -19,5 +19,12 @@ services:
       context: .
       dockerfile: Microservices/Payment/Payment.API/Dockerfile
 
+  api.gateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: Gateway/API.Gateway/Dockerfile
+
 volumes:
   mongo_data:
+
