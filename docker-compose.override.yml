@@ -7,7 +7,7 @@ services:
     volumes:
         - mongo_data:/data/db
     ports:
-        - "27017:27017"
+        - "27018:27017"
 
   transactionhistory.api:
     container_name: transactionhistory.api
@@ -22,3 +22,26 @@ services:
     #  - ${HOME}/.aspnet/https:/root/.aspnet/https/
     ports:
       - "8000:80"
+
+  paymentdb:
+    container_name: paymentdb
+    restart: always
+    volumes:
+        - mongo_data:/data/db2
+    ports:
+        - "27019:27017"
+
+  payment.api:
+    container_name: payment.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://paymentdb:27017"
+      #- "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    depends_on:
+      - paymentdb
+    #volumes:
+    #  - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
+    #  - ${HOME}/.aspnet/https:/root/.aspnet/https/
+    ports:
+      - "8001:80"
+

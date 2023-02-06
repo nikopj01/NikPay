@@ -9,6 +9,15 @@ services:
     build:
       context: .
       dockerfile: Microservices/TransactionHistory/TransactionHistory.API/Dockerfile
+      
+  paymentdb:
+    image: mongo
+
+  payment.api:
+    image: ${DOCKER_REGISTRY-}paymentapi
+    build:
+      context: .
+      dockerfile: Microservices/Payment/Payment.API/Dockerfile
 
 volumes:
   mongo_data:

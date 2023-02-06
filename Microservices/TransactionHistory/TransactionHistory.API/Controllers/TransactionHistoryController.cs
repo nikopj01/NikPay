@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TransactionHistory.API.Repositories.Interface;
 
 namespace TransactionHistory.API.Controllers
 {
+    //[Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class TransactionHistoryController : Controller
@@ -18,10 +20,10 @@ namespace TransactionHistory.API.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpGet("[action]/{email}", Name = "GetTransactionHistory")]
+        [HttpGet("[action]/{email}", Name = "GetTransactionHistoryByEmail")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Entities.TransactionHistory), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<Entities.TransactionHistory>> GetTransactionHistoryById(string email)
+        public async Task<ActionResult<Entities.TransactionHistory>> GetTransactionHistoryByEmail(string email)
         {
             var history = await _repository.GetTransactionHistory(email);
 
@@ -34,12 +36,12 @@ namespace TransactionHistory.API.Controllers
             return Ok(history);
         }
 
-        [HttpPost]
-        [ProducesResponseType(typeof(Entities.TransactionHistory), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddTransactionHistory([FromBody] Entities.TransactionHistory history)
-        {
-            await _repository.AddTransactionHistory(history);
-            return Ok();
-        }
+        //[HttpPost("[action]", Name = "AddTransactionHistory")]
+        //[ProducesResponseType(typeof(Entities.TransactionHistory), (int)HttpStatusCode.OK)]
+        //public async Task<IActionResult> AddTransactionHistory([FromBody] Entities.TransactionHistory history)
+        //{
+        //    await _repository.AddTransactionHistory(history);
+        //    return Ok();
+        //}
     }
 }
