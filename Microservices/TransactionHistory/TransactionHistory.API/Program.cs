@@ -1,6 +1,12 @@
+using EventBus.Common;
+using MassTransit;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TransactionHistory.API;
+using TransactionHistory.API.EventBusConsumer;
+using MediatR;
+using Microsoft.AspNetCore.Hosting;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +27,24 @@ builder.Services.AddAuthentication("Bearer")
              ValidateAudience = false
          };
      });
-
+// MassTransit-RabbitMQ Configuration
+builder.Services.AddMassTransit(config => {
+    config.AddConsumer<AddPaymentConsumer>();
+    config.UsingRabbitMq((ctx, cfg) => {
+        cfg.Host(builder.Configuration.GetValue<string>("EventBusSettings:HostAddress"));
+        //cfg.UseHealthCheck(ctx);
+        cfg.ReceiveEndpoint(EventBusContants.AddPaymentQueue, c => {
+            c.ConfigureConsumer<AddPaymentConsumer>(ctx);
+        });
+    });
+});
+//builder.Services.AddMassTransitHostedService();
+builder.Services.AddScoped<AddPaymentConsumer>();
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddControllersWithViews();
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+//builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddMediatR(AppDomain.CurrentDomain.Load("Data"));
 
 var app = builder.Build();
 var env = builder.Environment;

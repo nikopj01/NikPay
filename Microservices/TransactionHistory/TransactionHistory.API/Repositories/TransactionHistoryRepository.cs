@@ -16,7 +16,7 @@ namespace TransactionHistory.API.Repositories
         public async Task<IEnumerable<Entities.TransactionHistory>> GetTransactionHistory(string email)
         {
             FilterDefinition<Entities.TransactionHistory> filter = Builders<Entities.TransactionHistory>.Filter.
-                Eq(p => p.Email, email);
+                Eq(p => p.ToEmail, email);
 
             return await _context
                             .TransactionHistories

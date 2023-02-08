@@ -12,7 +12,7 @@ namespace Payment.API.Data
             var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
 
             AccountBalances = database.GetCollection<AccountBalance>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
-            //CatalogContextSeed.SeedData(Histories);
+            PaymentContextSeed.SeedData(AccountBalances);
         }
         public IMongoCollection<AccountBalance> AccountBalances { get; }
     }

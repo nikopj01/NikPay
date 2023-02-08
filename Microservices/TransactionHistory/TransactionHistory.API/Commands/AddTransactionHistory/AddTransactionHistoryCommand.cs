@@ -1,19 +1,15 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MediatR;
 
-namespace TransactionHistory.API.Entities
+namespace TransactionHistory.API.Commands.AddTransactionHistory
 {
-    public class TransactionHistory
+    public class AddTransactionHistoryCommand : IRequest<int>
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
         public DateTime Datetime { get; set; }
         public decimal Amount { get; set; }
-        public string ToEmail { get; set; }
         public string FromEmail { get; set; }
         public string FromFirstName { get; set; }
         public string FromLastName { get; set; }
         public string FromVendor { get; set; }
+        public string ToEmail { get; set; }
     }
 }

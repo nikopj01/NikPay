@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.OpenApi.Models;
 using Payment.API;
 
@@ -11,6 +12,13 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Payment.API", Version = "v1" });
 });
+builder.Services.AddMassTransit(config => {
+    config.UsingRabbitMq((ctx, cfg) => {
+        cfg.Host(builder.Configuration.GetValue<string>("EventBusSettings:HostAddress"));
+    });
+});
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 var env = builder.Environment;
