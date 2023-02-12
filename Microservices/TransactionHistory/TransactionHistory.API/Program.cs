@@ -27,6 +27,7 @@ builder.Services.AddAuthentication("Bearer")
              ValidateAudience = false
          };
      });
+
 // MassTransit-RabbitMQ Configuration
 builder.Services.AddMassTransit(config => {
     config.AddConsumer<AddPaymentConsumer>();
@@ -38,13 +39,13 @@ builder.Services.AddMassTransit(config => {
         });
     });
 });
-//builder.Services.AddMassTransitHostedService();
-builder.Services.AddScoped<AddPaymentConsumer>();
-builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddControllersWithViews();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-//builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
-//builder.Services.AddMediatR(AppDomain.CurrentDomain.Load("Data"));
+//builder.Services.AddScoped<AddPaymentConsumer>();
+
+//Auto Mapper
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 var env = builder.Environment;

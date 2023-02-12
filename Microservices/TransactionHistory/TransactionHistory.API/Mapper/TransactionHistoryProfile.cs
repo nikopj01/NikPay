@@ -8,7 +8,11 @@ namespace TransactionHistory.API.Mapper
     {
         public TransactionHistoryProfile()
         {
-            CreateMap<AddTransactionHistoryCommand, AddPaymentEvent>().ReverseMap();
+            //CreateMap<AddTransactionHistoryCommand, AddPaymentEvent>().ReverseMap();
+            CreateMap<AddPaymentEvent, AddTransactionHistoryCommand>()
+                .ForMember(dest => dest.Datetime, act => act.MapFrom(src => src.Datetime))
+                .ForMember(dest => dest.Amount, act => act.MapFrom(src => src.Amount))
+                .ForMember(dest => dest.FromEmail, act => act.MapFrom(src => src.FromEmail));
         }
     }
 }

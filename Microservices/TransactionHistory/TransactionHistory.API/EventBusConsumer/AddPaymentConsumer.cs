@@ -22,7 +22,6 @@ namespace TransactionHistory.API.EventBusConsumer
         {
             var command = _mapper.Map<AddTransactionHistoryCommand>(context.Message);
             var result = await _mediator.Send(command);
-
             _logger.LogInformation("AddPaymentEvent consumed successfully. Created Order Id : {newPaymentId}", result);
         }
     }

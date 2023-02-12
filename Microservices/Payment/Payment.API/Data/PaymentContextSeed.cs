@@ -23,6 +23,12 @@ namespace Payment.API.Data
                     Id = "602d2149e773f2a3990b47f5",
                     Email = "nikopj@gmail.com",
                     Balance = 22
+                },
+                new AccountBalance()
+                {
+                    Id = "123d2149e77312a3990b47f5",
+                    Email = "tina@gmail.com",
+                    Balance = 11
                 }
             };
         }

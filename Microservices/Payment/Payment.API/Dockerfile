@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Microservices/Payment/Payment.API/Payment.API.csproj", "Microservices/Payment/Payment.API/"]
+COPY ["Integration/EventBus/EventBus.csproj", "Integration/EventBus/"]
 RUN dotnet restore "Microservices/Payment/Payment.API/Payment.API.csproj"
 COPY . .
 WORKDIR "/src/Microservices/Payment/Payment.API"

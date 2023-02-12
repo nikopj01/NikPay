@@ -12,11 +12,14 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Payment.API", Version = "v1" });
 });
+
+// MassTransit-RabbitMQ Configuration
 builder.Services.AddMassTransit(config => {
     config.UsingRabbitMq((ctx, cfg) => {
         cfg.Host(builder.Configuration.GetValue<string>("EventBusSettings:HostAddress"));
     });
 });
+
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllersWithViews();
 

@@ -14,9 +14,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=mongodb://transactionhistorydb:27017"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
       #- "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
       - transactionhistorydb
+      - rabbitmq
     #volumes:
     #  - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
     #  - ${HOME}/.aspnet/https:/root/.aspnet/https/
@@ -36,9 +38,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=mongodb://paymentdb:27017"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
       #- "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
       - paymentdb
+      - rabbitmq
     #volumes:
     #  - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
     #  - ${HOME}/.aspnet/https:/root/.aspnet/https/
@@ -61,4 +65,3 @@ services:
     ports:
         - "5672:5672"
         - "15672:15672"
-

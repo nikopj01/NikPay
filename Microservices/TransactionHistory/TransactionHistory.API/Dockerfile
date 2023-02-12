@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Microservices/TransactionHistory/TransactionHistory.API/TransactionHistory.API.csproj", "Microservices/TransactionHistory/TransactionHistory.API/"]
+COPY ["Integration/EventBus/EventBus.csproj", "Integration/EventBus/"]
 RUN dotnet restore "Microservices/TransactionHistory/TransactionHistory.API/TransactionHistory.API.csproj"
 COPY . .
 WORKDIR "/src/Microservices/TransactionHistory/TransactionHistory.API"
