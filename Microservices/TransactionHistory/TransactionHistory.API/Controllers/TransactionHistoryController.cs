@@ -29,7 +29,7 @@ namespace TransactionHistory.API.Controllers
 
             if (history == null)
             {
-                _logger.LogError($"Transaction History with email: {email}, not found.");
+                _logger.LogError($"Transaction Historyy with email: {email}, not found.");
                 return NotFound();
             }
 
